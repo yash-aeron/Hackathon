@@ -1,9 +1,17 @@
 // Real-browser end-to-end walkthrough + screenshots for the demo.
 // Run with: node e2e-browser.cjs   (Playwright installed in %TEMP%\pwtest)
 
-const { chromium } = require("playwright");
 const fs = require("fs");
 const path = require("path");
+
+let playwright;
+try {
+  playwright = require("playwright");
+} catch {
+  const tempMod = path.join(process.env.TEMP || "C:\\Users\\aeron\\AppData\\Local\\Temp", "pwtest", "node_modules", "playwright");
+  playwright = require(tempMod);
+}
+const { chromium } = playwright;
 
 const BASE = process.env.BASE_URL || "http://localhost:3000";
 const OUT = path.resolve(__dirname, "..", "docs", "screenshots");
@@ -37,29 +45,31 @@ async function main() {
   await shot("01-home.png", true);
 
   // 2. Use sample profile -> editable profile card
-  await page.getByRole("button", { name: /Use sample profile/i }).click();
-  await page.getByRole("link", { name: /Rank my matches/i }).waitFor({ timeout: 30000 });
+  await page.getByRole("button", { name: /(Use sample profile|Load Pre-Built Sample Profile|Sample Profile)/i }).click();
+  await page.getByRole("link", { name: /(Rank my matches|See Ranked Matches|View Your Ranked Matches)/i }).first().waitFor({ timeout: 30000 });
   console.log("PARSE ok: profile card rendered");
+  await page.waitForTimeout(600);
   await shot("02-profile.png", true);
 
-  const skillsShown = await page.locator("text=CampusHire").count();
-  console.log("profile shows project CampusHire:", skillsShown > 0);
+  const skillsShown = await page.locator("text=SentinelPay").count();
+  console.log("profile shows project SentinelPay:", skillsShown > 0);
 
   // 3. Matches screen
-  await page.getByRole("link", { name: /Rank my matches/i }).click();
+  await page.getByRole("link", { name: /(Rank my matches|See Ranked Matches|View Your Ranked Matches)/i }).first().click();
   await page.waitForURL("**/matches", { timeout: 20000 });
   await page.locator('a[href^="/kit/"]').first().waitFor({ timeout: 60000 });
   const cards = await page.locator('a[href^="/kit/"]').count();
   console.log("MATCHES cards:", cards);
   await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(800);
   await shot("03-matches.png");
 
   // 4. Expand a high-risk trust badge
-  const riskyBadge = page.getByRole("button", { name: /High risk/i }).first();
+  const riskyBadge = page.getByRole("button", { name: /(High risk|Caution|Verified)/i }).first();
   if (await riskyBadge.count()) {
     await riskyBadge.click();
-    await page.waitForTimeout(400);
-    const reason = await page.locator("li", { hasText: /pts\)/ }).first().innerText().catch(() => "");
+    await page.waitForTimeout(500);
+    const reason = await page.locator("li, p", { hasText: /pts\)/ }).first().innerText().catch(() => "");
     console.log("RISK FLAG:", reason.replace(/\n/g, " ").slice(0, 120));
     await riskyBadge.scrollIntoViewIfNeeded();
     await shot("04-risk-badge.png");
@@ -68,7 +78,7 @@ async function main() {
   }
 
   // 5. "Check a listing" modal with pasted scam text
-  await page.getByRole("button", { name: /Check a listing/i }).click();
+  await page.getByRole("button", { name: /(Check a listing|Check External Listing)/i }).click();
   const textarea = page.locator("textarea").first();
   await textarea.waitFor({ timeout: 10000 });
   await textarea.fill(
@@ -76,7 +86,7 @@ async function main() {
       "Contact hr.quickjobs@gmail.com or WhatsApp only for the application form. " +
       "Guaranteed placement with no interview. Register at https://bit.ly/xyz",
   );
-  await page.getByRole("button", { name: /Check trust signals/i }).click();
+  await page.getByRole("button", { name: /(Check trust signals|Scan & Verify Listing)/i }).click();
   await page.waitForTimeout(2500);
   await shot("05-verify-modal.png");
   const modalText = await page.locator('[role="dialog"]').innerText().catch(() => "");
@@ -106,14 +116,15 @@ async function main() {
   await page.waitForURL("**/kit/**", { timeout: 20000 });
   await page.getByRole("tab", { name: /Gap analysis/i }).waitFor({ timeout: 30000 });
   console.log("KIT url:", page.url());
+  await page.waitForTimeout(600);
   await shot("06-kit-gaps.png", true);
 
   await page.getByRole("tab", { name: /Resume bullets/i }).click();
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(600);
   await shot("07-kit-bullets.png");
 
   await page.getByRole("tab", { name: /Cover note/i }).click();
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(600);
   await shot("08-kit-cover.png");
 
   // 8. Mobile layout (reuse the desktop storage so the profile/matches persist)
