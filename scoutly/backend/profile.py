@@ -70,7 +70,8 @@ INDIAN_CITIES: tuple[str, ...] = (
     "Bengaluru", "Bangalore", "Hyderabad", "Pune", "Chennai", "Mumbai", "Delhi",
     "New Delhi", "Noida", "Gurugram", "Gurgaon", "Ahmedabad", "Kolkata", "Jaipur",
     "Indore", "Coimbatore", "Trichy", "Tiruchirappalli", "Vellore", "Manipal",
-    "Chandigarh", "Kochi", "Thiruvananthapuram", "Bhopal", "Nagpur", "Surat", "Remote",
+    "Chandigarh", "Kochi", "Thiruvananthapuram", "Bhopal", "Nagpur", "Surat",
+    "Meerut", "Dehradun", "Remote",
 )
 
 

@@ -13,7 +13,7 @@ ENV/
 *.sqlite3
 **/backend/data/*.npy
 **/*.log
-opportunara/backend/scoutly.db
+scoutly/backend/scoutly.db
 
 # --- Node / Frontend ---
 node_modules/

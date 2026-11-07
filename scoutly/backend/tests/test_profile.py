@@ -20,23 +20,23 @@ def parsed(sample_text: str) -> dict:
 def test_sample_resume_is_bundled_and_substantial() -> None:
     text = load_sample_resume()
     assert len(text) > 500
-    assert "AARAV SHARMA" in text
+    assert "YASH AERON" in text
 
 
 def test_split_sections_finds_the_expected_headings(sample_text: str) -> None:
     sections = split_sections(sample_text)
     assert set(sections) >= {"header", "education", "skills", "projects", "experience"}
-    assert any("CampusHire" in line for line in sections["projects"])
+    assert any("SentinelPay" in line for line in sections["projects"])
 
 
 def test_name_is_extracted_from_the_header(parsed: dict) -> None:
-    assert parsed["name"] == "Aarav Sharma"
+    assert parsed["name"] == "Yash Aeron"
 
 
 def test_education_is_extracted(parsed: dict) -> None:
     education = parsed["education"]
     assert "B.Tech" in education["degree"]
-    assert "Tiruchirappalli" in education["college"]
+    assert "Graphic Era" in education["college"]
     assert education["year"]
 
 
@@ -49,21 +49,21 @@ def test_skills_cover_the_stated_stack(parsed: dict) -> None:
 def test_projects_are_extracted_with_tech(parsed: dict) -> None:
     projects = parsed["projects"]
     names = {project["name"] for project in projects}
-    assert {"CampusHire", "RetinaScan", "SplitKar", "SkillGraph"} <= names
-    campushire = next(project for project in projects if project["name"] == "CampusHire")
-    assert campushire["summary"]
-    assert campushire["tech"]
+    assert {"SentinelPay", "BlackBox", "Miniroute"} <= names
+    sentinel = next(project for project in projects if project["name"] == "SentinelPay")
+    assert sentinel["summary"]
+    assert sentinel["tech"]
 
 
 def test_experience_lines_are_extracted(parsed: dict) -> None:
     experience = " ".join(parsed["experience"]).lower()
-    assert "document ingestion pipeline" in experience
+    assert "sentinelpay" in experience
     assert len(parsed["experience"]) >= 2
 
 
 def test_interests_are_extracted(parsed: dict) -> None:
     interests = " ".join(parsed["interests"]).lower()
-    assert "developer tooling" in interests
+    assert "chess" in interests
 
 
 def test_target_types_are_inferred(parsed: dict) -> None:
@@ -75,7 +75,7 @@ def test_target_types_are_inferred(parsed: dict) -> None:
 
 
 def test_location_preference_is_inferred(parsed: dict) -> None:
-    assert parsed["location_pref"].lower() in {"bengaluru", "bengaluru, karnataka, india"}
+    assert parsed["location_pref"].lower() in {"meerut", "dehradun"}
 
 
 def test_heuristic_profile_is_deterministic(sample_text: str) -> None:

@@ -121,7 +121,7 @@ def test_sample_resume(client: TestClient) -> None:
     response = client.get("/api/sample-resume")
     assert response.status_code == 200
     body = response.json()
-    assert "aarav" in body["text"].lower()
+    assert "yash" in body["text"].lower()
     assert body["profile"]["skills"]
     assert body["profile"]["projects"]
 

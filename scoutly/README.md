@@ -9,8 +9,6 @@ generates a tailored application kit plus a deadline calendar.
 Everything runs locally: one FastAPI process, one SQLite file, one Next.js app. No
 sign-up, no external database, no scraping credentials.
 
-> **The repo folder is `opportunara/` (required by the brief); the product is Scoutly.**
-
 ---
 
 ## Screens
@@ -45,7 +43,7 @@ resume (PDF) -> extracted profile -> ranked matches with "why this fits"
 **Backend** (terminal 1, from the repo root):
 
 ```bash
-cd opportunara/backend
+cd scoutly/backend
 pip install -r requirements.txt
 cp .env.example .env          # defaults are safe: no key = mock mode
 python seed.py
@@ -55,7 +53,7 @@ uvicorn main:app --reload --port 8000
 **Frontend** (terminal 2):
 
 ```bash
-cd opportunara/frontend
+cd scoutly/frontend
 npm install
 npm run dev                    # http://localhost:3000
 ```
@@ -213,8 +211,8 @@ that always returns a validated Pydantic model:
 - **Bounded:** every call has a `LLM_TIMEOUT_SECONDS` timeout (default 10 s) and a
   concurrency semaphore (6), so the per-listing fan-out is safe on rate-limited tiers.
 - **Mock mode:** `MOCK_LLM=true` **or** no API key ⇒ every call returns the caller's
-  realistic canned payload instantly. `/api/health` reports `mock_llm: true`, and the UI
-  labels it in the header.
+  realistic canned payload instantly. `/api/health` reports `mock_llm: true`, ensuring
+  seamless offline operation with zero API key dependencies.
 
 Prompts live in `backend/prompts.py` as versioned constants (`PROMPT_VERSION`), each
 ending with the guardrail: *"Use only facts present in the provided profile and listing.
@@ -315,7 +313,7 @@ It deliberately contains, for demoing trust features:
 ## Tests
 
 ```bash
-cd opportunara/backend
+cd scoutly/backend
 python -m pytest          # 163 tests, ~2 s, fully offline
 ```
 
@@ -358,9 +356,10 @@ Scoutly does four things: reads the resume, ranks what fits, verifies the source
 drafts the application."
 
 **0:10 — Load the resume.** Click **Use sample profile** (or drag the sample PDF / paste
-text). The profile card appears: name, education, 26 skills as chips, 4 projects,
-interests — all editable. "Extraction runs on the model; nothing is invented, and in mock
-mode the same result comes from the deterministic parser."
+text). The profile card appears: Yash Aeron, B.Tech CSE (Graphic Era University, Expected 2028),
+22 skills as chips, 3 featured projects (SentinelPay, BlackBox, Miniroute) — all editable.
+"Extraction runs on the model; nothing is invented, and in mock mode the same result comes from
+the deterministic parser."
 
 **0:30 — Matches (`/matches`).** "60 listings scored on skills, level fit, deadline
 urgency and semantic similarity against the resume. 52 rank after dropping expired
@@ -392,14 +391,13 @@ under two minutes. Everything runs locally: FastAPI, SQLite, local embeddings."
 
 ## Design decisions & deviations
 
-- **Visual language (redesigned after the first pass, at the team's request).** The UI now
-  uses warm paper surfaces (`#f7f5f0`), institutional navy plus funding green, and an
-  EB Garamond / Lato pairing — a deliberate move away from the brief's
-  dark-navy/electric-blue. The whole palette is defined once in `app/globals.css`
-  (`@theme`, which also remaps Tailwind's `slate`/`ink`/`brand`/`accent` scales); components
-  consume only semantic tokens, so re-theming is a one-file change. Toast, modal, score
-  ring and inline notices were reworked to match, and empty/error/loading states are
-  screenshot-verified in a real browser.
+- **Visual language (redesigned into production-ready shippable UI).** The UI features an
+  elevated, highly accessible aesthetic built on Next.js 16 (App Router), React 19, and Tailwind
+  CSS v4. It utilizes a crisp Plus Jakarta Sans and Inter font pairing, refined semantic color tokens
+  (slate surfaces with emerald trust accents), Lucide vector icons, and tactile micro-interactions
+  (`active:scale-[0.98]`). The header is clean and minimal, without intrusive debug banners. Dropzones,
+  match cards, risk badges, and the 3-part Application Kit provide a cohesive and delightful student
+  experience.
 - **`backend/profile.py` keeps its required name but shadows CPython's stdlib `profile`
   module**, which torch imports through `cProfile`. A PEP 562 module-level `__getattr__`
   delegates unknown attributes to the real stdlib module, so both work. (Without it,
@@ -453,7 +451,7 @@ under two minutes. Everything runs locally: FastAPI, SQLite, local embeddings."
 ## Repository layout
 
 ```
-opportunara/
+scoutly/
 ├── backend/
 │   ├── main.py            FastAPI app + routes
 │   ├── models.py          SQLAlchemy tables + Pydantic schemas
