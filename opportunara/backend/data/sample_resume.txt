@@ -1,0 +1,49 @@
+YASH AERON
+Meerut, Uttar Pradesh, India | aeronyash2020@gmail.com | +91-9548579883
+github.com/yash-aeron | linkedin.com/in/yash-aeron-688ab8269
+
+EDUCATION
+B.Tech in Computer Science & Engineering, Graphic Era University
+Expected 2028 | CGPA: 9.00 / 10
+Class XII, CBSE, Dewan Public School 2024 (90.4%)
+Class X, CBSE, Dewan Public School 2022 (94.1%)
+
+RELEVANT COURSEWORK
+Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems, Operating Systems.
+
+TECHNICAL SKILLS
+Languages: C, C++, Java, Python, TypeScript, JavaScript, HTML
+CS Fundamentals: Data Structures & Algorithms, Object-Oriented Design, Software Design, Distributed Systems
+Software Engineering: Software Development Lifecycle (SDLC), REST APIs, Agile/Scrum, Git/GitHub, CI/CD, Automated Testing, Observability
+AI / LLM: RAG, Agentic AI, Prompt Engineering, Context Management, LLM APIs, scikit-learn
+Web & Cloud: React, UI/UX, dashboard development, Cloud-Native Development, FastAPI, Node.js, asyncio, AWS, Docker
+Databases & Tools: PostgreSQL, MySQL, SQLite, Redis, MongoDB, pytest, Vitest, Playwright, Claude Code, Cline, GitHub Copilot
+
+EXPERIENCE
+Software Engineering & Autonomous Systems (2024 - Present)
+- Built SentinelPay: an idempotent, concurrency-safe payment processing engine with a PostgreSQL double-entry ledger and fraud scoring with Redis velocity windows.
+- Developed BlackBox: an autonomous web agent that learns and reuses web-app state transitions from DOM and accessibility trees to cut repeated LLM planning by 90%.
+- Created Miniroute: a resilient local AI Gateway with automated provider failover, streaming support, and comprehensive Vitest test coverage.
+
+PROJECTS
+SentinelPay – Payments & Fraud Risk Engine
+- Built idempotent, concurrency-safe payment processing for distributed-systems retry scenarios with a PostgreSQL double-entry ledger; real-Postgres tests verified that 50 concurrent retries produced one ledger movement, with database constraints enforcing overdraft protections.
+- Implemented fraud scoring with Redis velocity windows, IsolationForest and deterministic rules; degraded scoring paths route uncertain payments to REVIEW. Built a React analyst dashboard with a focus on usability for fraud reviewers.
+- Added a RAG compliance copilot with citation/number grounding validation, rate limiting and Prometheus metrics; load-tested at 28.3 payments/s (p99 990 ms, zero errors) on a single development worker.
+
+BlackBox – Autonomous Web Agent with Persistent Behavioral Model
+- Built an agent that learns and reuses web-app state transitions from DOM and accessibility trees to reduce repeated LLM planning; in a demo CRM, reduced actions by 90.2% and planning latency by 53x versus a no-memory baseline.
+- Added origin allowlists and approval gates; wrote 57 automated tests across unit, browser and end-to-end layers.
+
+Miniroute – Local AI Gateway with Automatic Failover
+- Built an OpenAI/Anthropic-compatible gateway with provider fallback chains, retry handling, circuit breakers and streaming failover.
+- Added per-request SQLite logs; secured defaults with loopback-only binding and owner-only OAuth token storage, and validated workflows with end-to-end tests.
+
+CERTIFICATIONS & TRAINING
+- Machine Learning Specialization – DeepLearning.AI & Stanford University (Coursera)
+- AWS Cloud Practitioner Essentials – AWS Training & Certification (Score: 100%)
+- AWS CI/CD & Cloud Networking – AWS Training & Certification
+
+STRENGTHS & INTERESTS
+Strengths: Communication, Collaboration, Teamwork, Customer-First Mindset, Growth Mindset, Curiosity.
+Interests: Puzzles, Chess, Music, FinTech, Distributed Systems, AI Agents.

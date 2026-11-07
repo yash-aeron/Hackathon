@@ -1,0 +1,32 @@
+# --- Python / Backend ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+ENV/
+.pytest_cache/
+.env
+*.db
+*.db-journal
+*.sqlite3
+**/backend/data/*.npy
+**/*.log
+opportunara/backend/scoutly.db
+
+# --- Node / Frontend ---
+node_modules/
+.next/
+out/
+build/
+.turbo/
+*.tsbuildinfo
+.env.local
+.env.*.local
+
+# --- OS / Editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
